@@ -8,25 +8,42 @@ import {
     View,
     Image,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    ListView
 } from 'react-native';
 
+import {statusHeight} from '../common/CommonApi';
+import Toolbar from '../component/ToolBar';
+
 class HomePage extends Component {
+    constructor(props)
+    {
+        super(props);
+
+        this.state = {}
+    }
+
     render()
     {
         return (
             <View style={styles.container}>
-                <Text>HomePage</Text>
+                <Toolbar style={styles.toolbar}/>
             </View>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginTop: statusHeight()
+    },
+    toolbar: {
+        height: 30,
+    },
+    text: {
+        fontSize: 20, textAlign: 'center'
     }
 });
 
