@@ -4,6 +4,7 @@ a react native app about fleet
 ## 参考资料
 * [iOS App图标和启动画面尺寸](http://www.jianshu.com/p/adpKye)
 * [react native中文网文档](http://reactnative.cn/docs/0.31/getting-started.html)
+* [百度地图文档](http://lbsyun.baidu.com/index.php?title=androidsdk/guide/buildproject)
 
 ## 碰到的问题&对策
 ###ipad实机没法启动hot reloading来动态进行调试
@@ -11,3 +12,4 @@ a react native app about fleet
 
 ## 使用的第三方库
 * [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+* [百度地图](http://lbsyun.baidu.com/)

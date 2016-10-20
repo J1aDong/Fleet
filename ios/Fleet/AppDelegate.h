@@ -11,7 +11,7 @@
 #import <BaiduMapAPI_Base/BMKBaseComponent.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
-    UIWindow *window;
+    UIWindow *_window;
     UINavigationController *navigationController;
     BMKMapManager *_mapManager;
 }

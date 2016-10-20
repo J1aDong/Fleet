@@ -40,3 +40,7 @@ buck-out/
 android/app/libs
 android/keystores/debug.keystore
 /node_modules/
+/android/zeninRelease.jks
+images/
+ios/Pods/
+/android/gradle.properties

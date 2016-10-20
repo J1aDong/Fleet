@@ -14,6 +14,7 @@ import {
 
 import {statusHeight} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
+import BdMapView from '../component/BdMapView';
 
 class HomePage extends Component {
     constructor(props)
@@ -28,6 +29,7 @@ class HomePage extends Component {
         return (
             <View style={styles.container}>
                 <Toolbar style={styles.toolbar}/>
+                <BdMapView location={true} style={{flex: 1}}/>
             </View>
         )
     }
