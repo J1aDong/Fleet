@@ -1,6 +1,6 @@
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {
     AppRegistry,
     StyleSheet,
@@ -13,17 +13,28 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class ToolBar extends Component {
+    constructor(props)
+    {
+        super(props);
+    }
+
+    static propTypes = {
+        title: PropTypes.string, //中间的标题
+        leftOnClick: PropTypes.func, //左边按钮的监听
+        rightOnClick: PropTypes.func//右边按钮的监听
+    };
+
     render()
     {
         return (
             <View style={styles.container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.leftOnClick}>
                     <Icon name="ios-menu" size={30} color='#303030'/>
                 </TouchableOpacity>
 
-                <Text style={styles.textCenter}>Fleet</Text>
+                <Text style={styles.textCenter}>{this.props.title}</Text>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.rightOnClick}>
                     <Icon name="ios-contact" size={30} color='#303030'/>
                 </TouchableOpacity>
             </View>

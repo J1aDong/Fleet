@@ -15,6 +15,7 @@ import {
 import {statusHeight} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
+import Setting from '../pages/Setting';
 
 class HomePage extends Component {
     constructor(props)
@@ -26,10 +27,31 @@ class HomePage extends Component {
 
     render()
     {
+        const {navigator} = this.props;
+
         return (
             <View style={styles.container}>
-                <Toolbar style={styles.toolbar}/>
-                <BdMapView location={true} style={{flex: 1}}/>
+                <Toolbar style={styles.toolbar}
+                         title="Fleet"
+                         leftOnClick={() =>
+                         {
+                             console.log('按了左边');
+                             navigator.push({
+                                 name: 'Setting',
+                                 component: Setting
+                             });
+                         }} rightOnClick={() =>
+                {
+                    console.log('点击右边');
+                    navigator.push({
+                        name: 'Setting',
+                        component: Setting
+                    })
+                }}/>
+                <BdMapView location={true} style={styles.top}/>
+                <View style={styles.bottom}>
+
+                </View>
             </View>
         )
     }
@@ -46,6 +68,12 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20, textAlign: 'center'
+    },
+    top: {
+        flex: 2
+    },
+    bottom: {
+        flex: 3
     }
 });
 

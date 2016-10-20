@@ -6,6 +6,7 @@ import {
     Navigator
 } from 'react-native';
 import HomePage from './pages/HomePage';
+import {isAndroid} from './common/CommonApi';
 
 class App extends React.Component {
     render()
@@ -17,7 +18,7 @@ class App extends React.Component {
                 initialRoute={{name: defaultName, component: defaultComponent}}
                 configureScene={(route) =>
                 {
-                    return Navigator.SceneConfigs.FloatFromRight;
+                    return Navigator.SceneConfigs.PushFromRight;
                 }}
                 renderScene={(route, navigator) =>
                 {
