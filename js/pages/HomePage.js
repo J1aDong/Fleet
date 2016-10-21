@@ -18,6 +18,8 @@ import {statusHeight} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
 import Setting from '../pages/Setting';
+import QRCodeScreen from '../component/QRCodeScreen';
+import {toastShort} from '../component/Toast';
 
 class HomePage extends Component {
     constructor(props)
@@ -27,9 +29,17 @@ class HomePage extends Component {
         this.state = {}
     }
 
+    // 扫描成功的回调
+    _onSuccess(result)
+    {
+        console.log(result);
+        toastShort('扫描成功' + result);
+    }
+
     render()
     {
         const {navigator} = this.props;
+        var that = this;
 
         return (
             <View style={styles.container}>
@@ -53,9 +63,20 @@ class HomePage extends Component {
                 <BdMapView location={true} style={styles.top}/>
                 <View style={styles.bottom}>
                     <ActionButton buttonColor="rgba(231,76,60,1)" hideShadow={true}>
-                        <ActionButton.Item buttonColor='#9b59b6' title="New Task"
-                                           onPress={() => console.log("notes tapped!")}>
-                            <Icon name="md-create" style={styles.actionButtonIcon}/>
+                        <ActionButton.Item buttonColor='#9b59b6' title="扫描二维码"
+                                           onPress={() =>
+                                           {
+                                               console.log("notes tapped!");
+                                               navigator.push({
+                                                   name: 'QRCodeScreen',
+                                                   title: 'QRCode',
+                                                   component: QRCodeScreen,
+                                                   passProps: {
+                                                       onSuccess: that._onSuccess,
+                                                   }
+                                               })
+                                           }}>
+                            <Icon name="md-qr-scanner" style={styles.actionButtonIcon}/>
                         </ActionButton.Item>
                         <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() =>
                         {

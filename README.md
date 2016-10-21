@@ -14,10 +14,16 @@ a react native app about fleet
 ### 安卓上的场景转换特别卡
 > 1.注意不要开启chrome调试 2.生成release版本，再安装到手机上，会很流畅
 
+### 有时候提示找不到依赖的第三方包，暂时无从下手
+> 参考[链接](https://github.com/facebook/react-native/issues/4968)
+
 ## 使用的第三方库
 * [react-native-vector-icons(图标字体库)](https://github.com/oblador/react-native-vector-icons)
 * [百度地图](http://lbsyun.baidu.com/)
 * [react-native-action-button](https://github.com/mastermoo/react-native-action-button)
+* [react-native-qrcode-reader](https://github.com/lazaronixon/react-native-qrcode-reader)
+* [react-native-camera](https://github.com/lwansbrough/react-native-camera)
+* [react-native-root-toast](https://github.com/magicismight/react-native-root-toast)
 
 ## 打包
 ### 安卓
@@ -25,3 +31,6 @@ a react native app about fleet
 > * 在MainApplication中添加``protected String getBundleAssetName() {
 			return "index.android.jsbundle";
 		}``
+		
+### iOS
+> 将`jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];`的注释打开		
