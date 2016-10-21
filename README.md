@@ -15,8 +15,9 @@ a react native app about fleet
 > 1.注意不要开启chrome调试 2.生成release版本，再安装到手机上，会很流畅
 
 ## 使用的第三方库
-* [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons)
+* [react-native-vector-icons(图标字体库)](https://github.com/oblador/react-native-vector-icons)
 * [百度地图](http://lbsyun.baidu.com/)
+* [react-native-action-button](https://github.com/mastermoo/react-native-action-button)
 
 ## 打包
 ### 安卓
