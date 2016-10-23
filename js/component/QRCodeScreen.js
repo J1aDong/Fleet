@@ -8,6 +8,7 @@ import {
     Text,
     TouchableOpacity,
     Vibration,
+    StatusBar
 } from 'react-native'
 
 import Camera from 'react-native-camera';
@@ -71,6 +72,8 @@ var QRCodeScreen = React.createClass({
 
         return (
             <Camera onBarCodeRead={this._onBarCodeRead} style={styles.camera}>
+                <StatusBar
+                    barStyle="light-content"/>
                 <View style={styles.rectangleContainer}>
                     <View style={styles.rectangle}/>
                 </View>
@@ -84,11 +87,11 @@ var CancelButton = React.createClass({
     render: function ()
     {
         return (
-            <View style={styles.cancelButton}>
-                <TouchableOpacity onPress={this.props.onPress}>
+            <TouchableOpacity onPress={this.props.onPress}>
+                <View style={styles.cancelButton}>
                     <Text style={styles.cancelButtonText}>{this.props.title}</Text>
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableOpacity>
         );
     },
 });
@@ -108,7 +111,7 @@ var styles = StyleSheet.create({
     },
 
     rectangle: {
-        height: 250,
+        height: 200,
         width: 250,
         borderWidth: 2,
         borderColor: '#00FF00',
@@ -123,6 +126,7 @@ var styles = StyleSheet.create({
         padding: 15,
         width: 100,
         bottom: 10,
+        marginTop:50
     },
     cancelButtonText: {
         fontSize: 17,

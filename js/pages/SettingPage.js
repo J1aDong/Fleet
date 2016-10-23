@@ -12,7 +12,7 @@ import {
     BackAndroid
 } from 'react-native';
 
-class Default extends Component {
+class SettingPage extends Component {
     render()
     {
         return (
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Default;
+export default SettingPage;

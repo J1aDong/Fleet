@@ -8,7 +8,8 @@ import {
     View,
     Image,
     TouchableOpacity,
-    TextInput
+    TextInput,
+    BackAndroid
 } from 'react-native';
 
 class Default extends Component {
@@ -19,6 +20,28 @@ class Default extends Component {
                 <Text>HomePage</Text>
             </View>
         )
+    }
+
+    componentWillMount()
+    {
+        BackAndroid.addEventListener('hardwareBackPress', () => this.onBackAndroid());
+    }
+
+    componentWillUnMount()
+    {
+        BackAndroid.removeEventListener('hardwareBackPress', () => this.onBackAndroid());
+    }
+
+    onBackAndroid()
+    {
+        const {navigator} = this.props;
+        const routers = navigator.getCurrentRoutes();
+        if (routers.length > 1)
+        {
+            navigator.pop();
+            return true;
+        }
+        return false;
     }
 }
 

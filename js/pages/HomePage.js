@@ -9,15 +9,18 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    ListView
+    ListView,
+    StatusBar
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import SideMenu from 'react-native-side-menu';
 
 import {statusHeight} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
-import Setting from '../pages/Setting';
+import Setting from './SettingPage';
+import TableViewPage from './TableViewPage';
 import QRCodeScreen from '../component/QRCodeScreen';
 import {toastShort} from '../component/Toast';
 
@@ -26,7 +29,9 @@ class HomePage extends Component {
     {
         super(props);
 
-        this.state = {}
+        this.state = {
+            isOpen: false
+        }
     }
 
     // 扫描成功的回调
@@ -41,60 +46,72 @@ class HomePage extends Component {
         const {navigator} = this.props;
         var that = this;
 
+        const menu = <TableViewPage navigator={navigator}/>;
+
         return (
-            <View style={styles.container}>
-                <Toolbar style={styles.toolbar}
-                         title="Fleet"
-                         leftOnClick={() =>
-                         {
-                             console.log('按了左边');
-                             navigator.push({
-                                 name: 'Setting',
-                                 component: Setting,
-                                 enableSwipeBack: true
-                             });
-                         }} rightOnClick={() =>
-                {
-                    console.log('点击右边');
-                    navigator.push({
-                        name: 'Setting',
-                        component: Setting,
-                        enableSwipeBack: true
-                    })
-                }}/>
-                <BdMapView location={true} style={styles.top}/>
-                <View style={styles.bottom}>
-                    <ActionButton buttonColor="rgba(231,76,60,1)" hideShadow={true}>
-                        <ActionButton.Item buttonColor='#9b59b6' title="扫描二维码"
-                                           onPress={() =>
-                                           {
-                                               console.log("notes tapped!");
-                                               navigator.push({
-                                                   name: 'QRCodeScreen',
-                                                   title: 'QRCode',
-                                                   component: QRCodeScreen,
-                                                   passProps: {
-                                                       onSuccess: that._onSuccess,
-                                                       cancelButtonVisible: true
-                                                   },
-                                                   enableSwipeBack: false
-                                               })
-                                           }}>
-                            <Icon name="md-qr-scanner" style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() =>
-                        {
-                        }}>
-                            <Icon name="md-notifications-off" style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
-                        <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() =>
-                        {
-                        }}>
-                            <Icon name="md-done-all" style={styles.actionButtonIcon}/>
-                        </ActionButton.Item>
-                    </ActionButton>
+            <SideMenu menu={menu} isOpen={this.state.isOpen}>
+                <View style={styles.container}>
+                    <StatusBar
+                        barStyle="default"/>
+                    <View style={styles.toolbarStatus}/>
+                    <Toolbar style={styles.toolbar}
+                             title="Fleet"
+                             leftOnClick={() =>
+                             {
+                                 console.log('按了左边');
+                                 that.setState({
+                                     isOpen: true
+                                 });
+
+                             }} rightOnClick={() =>
+                    {
+                        console.log('点击右边');
+                        that.setState({
+                            isOpen: false
+                        });
+                        navigator.push({
+                            name: 'Setting',
+                            component: Setting,
+                            enableSwipeBack: true
+                        })
+                    }}/>
+                    <BdMapView location={true} style={styles.top}/>
+                    <View style={styles.bottom}>
+                        <ActionButton buttonColor="rgba(231,76,60,1)" hideShadow={true}>
+                            <ActionButton.Item buttonColor='#9b59b6' title="扫描二维码"
+                                               onPress={() =>
+                                               {
+                                                   console.log("notes tapped!");
+                                                   that.setState({
+                                                       isOpen: false
+                                                   });
+                                                   navigator.push({
+                                                       name: 'QRCodeScreen',
+                                                       title: 'QRCode',
+                                                       component: QRCodeScreen,
+                                                       passProps: {
+                                                           onSuccess: that._onSuccess,
+                                                           cancelButtonVisible: true
+                                                       },
+                                                       enableSwipeBack: false
+                                                   })
+                                               }}>
+                                <Icon name="md-qr-scanner" style={styles.actionButtonIcon}/>
+                            </ActionButton.Item>
+                            <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() =>
+                            {
+                            }}>
+                                <Icon name="md-notifications-off" style={styles.actionButtonIcon}/>
+                            </ActionButton.Item>
+                            <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() =>
+                            {
+                            }}>
+                                <Icon name="md-done-all" style={styles.actionButtonIcon}/>
+                            </ActionButton.Item>
+                        </ActionButton>
+                    </View>
                 </View>
-            </View>
+            </SideMenu>
         )
     }
 
@@ -103,7 +120,11 @@ class HomePage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: statusHeight()
+        backgroundColor: 'white'
+    },
+    toolbarStatus: {
+        marginTop: statusHeight(),
+        backgroundColor: 'white'
     },
     toolbar: {
         height: 30,
