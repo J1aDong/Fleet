@@ -50,14 +50,16 @@ class HomePage extends Component {
                              console.log('按了左边');
                              navigator.push({
                                  name: 'Setting',
-                                 component: Setting
+                                 component: Setting,
+                                 enableSwipeBack: true
                              });
                          }} rightOnClick={() =>
                 {
                     console.log('点击右边');
                     navigator.push({
                         name: 'Setting',
-                        component: Setting
+                        component: Setting,
+                        enableSwipeBack: true
                     })
                 }}/>
                 <BdMapView location={true} style={styles.top}/>
@@ -73,7 +75,9 @@ class HomePage extends Component {
                                                    component: QRCodeScreen,
                                                    passProps: {
                                                        onSuccess: that._onSuccess,
-                                                   }
+                                                       cancelButtonVisible: true
+                                                   },
+                                                   enableSwipeBack: false
                                                })
                                            }}>
                             <Icon name="md-qr-scanner" style={styles.actionButtonIcon}/>

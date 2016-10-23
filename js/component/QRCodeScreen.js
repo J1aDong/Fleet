@@ -31,20 +31,20 @@ var QRCodeScreen = React.createClass({
 
     _onPressCancel: function ()
     {
-        var $this = this;
+        var that = this;
         requestAnimationFrame(function ()
         {
-            $this.props.navigator.pop();
-            if ($this.props.onCancel)
+            that.props.navigator.pop();
+            if (that.props.onCancel)
             {
-                $this.props.onCancel();
+                that.props.onCancel();
             }
         });
     },
 
     _onBarCodeRead: function (result)
     {
-        var $this = this;
+        var that = this;
 
         if (this.barCodeFlag)
         {
@@ -53,8 +53,8 @@ var QRCodeScreen = React.createClass({
             setTimeout(function ()
             {
                 Vibration.vibrate();
-                $this.props.navigator.pop();
-                $this.props.onSuccess(result.data);
+                that.props.navigator.pop();
+                that.props.onSuccess(result.data);
             }, 1000);
         }
     },
@@ -96,7 +96,7 @@ var CancelButton = React.createClass({
 var styles = StyleSheet.create({
 
     camera: {
-        height: 568,
+        flex: 1,
         alignItems: 'center',
     },
 
@@ -119,7 +119,7 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         backgroundColor: 'white',
-        borderRadius: 3,
+        borderRadius: 30,
         padding: 15,
         width: 100,
         bottom: 10,

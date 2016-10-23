@@ -13,12 +13,25 @@ class App extends React.Component {
     {
         let defaultName = 'HomePage';
         let defaultComponent = HomePage;
+        let defaultEnableSwipeBack = true;
+
         return (
             <Navigator
-                initialRoute={{name: defaultName, component: defaultComponent}}
+                initialRoute={{name: defaultName, component: defaultComponent, enableSwipeBack: defaultEnableSwipeBack}}
                 configureScene={(route) =>
                 {
-                    return Navigator.SceneConfigs.PushFromRight;
+                    let enableSwipeBack = route.enableSwipeBack;
+                    if (enableSwipeBack)
+                    {
+                        return Navigator.SceneConfigs.PushFromRight;
+                    } else
+                    {
+                        return {
+                            ...Navigator.SceneConfigs.PushFromRight,
+                            gestures: null
+                        }
+                    }
+
                 }}
                 renderScene={(route, navigator) =>
                 {
