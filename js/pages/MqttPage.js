@@ -12,17 +12,19 @@ import {
     BackAndroid
 } from 'react-native';
 import mqtt from 'react-native-mqtt';
+import {statusHeight} from '../common/CommonApi';
+import {toastShort} from '../component/Toast';
+
+var agentId = '577ba294280c474b40aad690';
+var agentToken = 'WlCllVNCPCZlHlhVyxaNHBiwABdgwuMk';
+var SUBSCRIBE_TOPIC = "agents/" + agentId + "/downstream";
+var PUBLISH_TOPIC = "jsonUp";
+var mqttClient;
 
 class MqttPage extends Component {
     constructor(props)
     {
         super(props);
-
-        var agentId = '577ba294280c474b40aad690';
-        var agentToken = 'WlCllVNCPCZlHlhVyxaNHBiwABdgwuMk';
-
-        var SUBSCRIBE_TOPIC = "agents/" + agentId + "/downstream";
-        var PUBLISH_TOPIC = "jsonUp";
 
         var options = {
             host: 'broker.j1st.io',
@@ -37,6 +39,8 @@ class MqttPage extends Component {
 
         mqtt.createClient(options).then(function (client)
         {
+            mqttClient = client;
+
             client.on('closed', function ()
             {
                 console.log('mqtt.event.closed');
@@ -52,25 +56,63 @@ class MqttPage extends Component {
             client.on('message', function (msg)
             {
                 console.log('mqtt.event.message', msg);
+                toastShort('接收到消息' + JSON.stringify(msg));
             });
 
             client.on('connect', function ()
             {
                 console.log('连接成功');
+                client.subscribe(SUBSCRIBE_TOPIC, 0);
+                toastShort('连接成功');
             });
-
-            client.connect();
         }).catch(function (err)
         {
             console.log(err);
         });
     }
 
+    _connectClient()
+    {
+        mqttClient.connect();
+    }
+
+    _publishClient()
+    {
+        mqttClient.publish(SUBSCRIBE_TOPIC, 'test', 0, false);
+    }
+
     render()
     {
         return (
             <View style={styles.container}>
-                <Text>HomePage</Text>
+                <View style={styles.toolbarStatus}/>
+                <Text style={{textAlign: 'center', fontSize: 30}}>Mqtt Sample</Text>
+                <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 40}}>
+                    <Text style={{flex: 2, textAlign: 'center'}}>Agent Id</Text>
+                    <Text style={{flex: 5, textAlign: 'center'}}>{agentId}</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 40}}>
+                    <Text style={{flex: 2, textAlign: 'center'}}>Agent Token</Text>
+                    <Text style={{flex: 5, textAlign: 'center'}}>{agentToken}</Text>
+                </View>
+                <TouchableOpacity onPress={() =>
+                {
+                    this._connectClient();
+                }}>
+                    <View style={styles.button}>
+                        <Text style={{color: 'white'}}>连接</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() =>
+                {
+                    this._publishClient();
+                }}>
+                    <View style={styles.button}>
+                        <Text style={{color: 'white'}}>发送</Text>
+                    </View>
+                </TouchableOpacity>
+
             </View>
         )
     }
@@ -101,9 +143,21 @@ class MqttPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'white',
+        alignItems: 'center'
+    },
+    toolbarStatus: {
+        marginTop: statusHeight(),
+        backgroundColor: 'white'
+    },
+    button: {
+        width: 70,
+        height: 70,
+        backgroundColor: 'red',
+        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white'
+        marginTop: 20
     }
 });
 
