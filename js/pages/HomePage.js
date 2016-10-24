@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import SideMenu from 'react-native-side-menu';
+import DrawerLayout from 'react-native-drawer-layout';
 
 import {statusHeight} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
@@ -29,9 +29,7 @@ class HomePage extends Component {
     {
         super(props);
 
-        this.state = {
-            isOpen: false
-        }
+        this.state = {}
     }
 
     // 扫描成功的回调
@@ -49,7 +47,10 @@ class HomePage extends Component {
         const menu = <TableViewPage navigator={navigator}/>;
 
         return (
-            <SideMenu menu={menu} isOpen={this.state.isOpen}>
+            <DrawerLayout drawerWidth={300} renderNavigationView={() => menu} ref={(drawer) =>
+            {
+                return this.drawer = drawer
+            }}>
                 <View style={styles.container}>
                     <StatusBar
                         barStyle="default"/>
@@ -59,16 +60,11 @@ class HomePage extends Component {
                              leftOnClick={() =>
                              {
                                  console.log('按了左边');
-                                 that.setState({
-                                     isOpen: true
-                                 });
+                                 that.drawer.openDrawer();
 
                              }} rightOnClick={() =>
                     {
                         console.log('点击右边');
-                        that.setState({
-                            isOpen: false
-                        });
                         navigator.push({
                             name: 'Setting',
                             component: Setting,
@@ -82,9 +78,6 @@ class HomePage extends Component {
                                                onPress={() =>
                                                {
                                                    console.log("notes tapped!");
-                                                   that.setState({
-                                                       isOpen: false
-                                                   });
                                                    navigator.push({
                                                        name: 'QRCodeScreen',
                                                        title: 'QRCode',
@@ -111,7 +104,7 @@ class HomePage extends Component {
                         </ActionButton>
                     </View>
                 </View>
-            </SideMenu>
+            </DrawerLayout>
         )
     }
 

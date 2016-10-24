@@ -24,7 +24,7 @@ a react native app about fleet
 * [react-native-qrcode-reader](https://github.com/lazaronixon/react-native-qrcode-reader)
 * [react-native-camera](https://github.com/lwansbrough/react-native-camera)
 * [react-native-root-toast](https://github.com/magicismight/react-native-root-toast)
-* [react-native-tab-view](https://github.com/react-native-community/react-native-tab-view)
+* [react-native-drawer-layout](https://github.com/iodine/react-native-drawer-layout)
 
 ## 打包
 ### 安卓
