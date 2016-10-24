@@ -1,6 +1,6 @@
 'use strict';
 
-import {Platform} from 'react-native';
+import {Platform, Dimensions} from 'react-native';
 
 export function statusHeight()
 {
@@ -11,6 +11,11 @@ export function statusHeight()
     {
         return 0;
     }
+}
+
+export function getDeviceWidth()
+{
+    return Dimensions.get('window').width;
 }
 
 export function isAndroid()

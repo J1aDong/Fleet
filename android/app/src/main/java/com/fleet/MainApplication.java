@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.react.ReactApplication;
+import com.tuanpm.RCTMqtt.RCTMqttPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication
 		{
 			return Arrays
 					.<ReactPackage> asList(new MainReactPackage(),
+            new RCTMqttPackage(),
             new RCTCameraPackage(), new VectorIconsPackage(), new MyReactPackage());
 		}
 

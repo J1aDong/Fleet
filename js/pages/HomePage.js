@@ -16,11 +16,12 @@ import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DrawerLayout from 'react-native-drawer-layout';
 
-import {statusHeight} from '../common/CommonApi';
+import {statusHeight, getDeviceWidth} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
 import Setting from './SettingPage';
 import TableViewPage from './TableViewPage';
+import MqttPage from './MqttPage';
 import QRCodeScreen from '../component/QRCodeScreen';
 import {toastShort} from '../component/Toast';
 
@@ -44,13 +45,14 @@ class HomePage extends Component {
         const {navigator} = this.props;
         var that = this;
 
-        const menu = <TableViewPage navigator={navigator}/>;
+        const menu = <MqttPage navigator={navigator}/>;
 
         return (
-            <DrawerLayout drawerWidth={300} renderNavigationView={() => menu} ref={(drawer) =>
-            {
-                return this.drawer = drawer
-            }}>
+            <DrawerLayout drawerWidth={getDeviceWidth() > 600 ? 500 : 300} renderNavigationView={() => menu}
+                          ref={(drawer) =>
+                          {
+                              return this.drawer = drawer
+                          }}>
                 <View style={styles.container}>
                     <StatusBar
                         barStyle="default"/>

@@ -17,6 +17,9 @@ a react native app about fleet
 ### 有时候提示找不到依赖的第三方包，暂时无从下手
 > 参考[链接](https://github.com/facebook/react-native/issues/4968)
 
+### mqtt库报错'MQTTClient/MQTTClient.h' file not found 
+> 参考[链接](https://github.com/tuanpmt/react-native-mqtt/issues/6)
+
 ## 使用的第三方库
 * [react-native-vector-icons(图标字体库)](https://github.com/oblador/react-native-vector-icons)
 * [百度地图](http://lbsyun.baidu.com/)
@@ -25,6 +28,7 @@ a react native app about fleet
 * [react-native-camera](https://github.com/lwansbrough/react-native-camera)
 * [react-native-root-toast](https://github.com/magicismight/react-native-root-toast)
 * [react-native-drawer-layout](https://github.com/iodine/react-native-drawer-layout)
+* [react-native-mqtt](https://github.com/tuanpmt/react-native-mqtt)
 
 ## 打包
 ### 安卓
