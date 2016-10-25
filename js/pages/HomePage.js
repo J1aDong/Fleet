@@ -19,7 +19,7 @@ import DrawerLayout from 'react-native-drawer-layout';
 import {statusHeight, getDeviceWidth, get} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
-import Setting from './SettingPage';
+import Setting from './LoginPage';
 import MqttPage from './MqttPage';
 import QRCodeScreen from '../component/QRCodeScreen';
 import {toastShort} from '../component/Toast';

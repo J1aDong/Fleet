@@ -1,6 +1,22 @@
 # Fleet
 a react native app about fleet
 
+## 环境
+> * macOS 10.12
+* Android Studio 2.2.2
+* WebStorm 2016.2.4
+* Xcode 8.0
+* react-native 0.35.0
+
+## 安装&运行
+> * 参照官网先搭建好react-native的开发环境，确保能顺利运行hello world 
+* git clone
+* 在根目录下命令行 npm install
+* 在ios目录下命令行 pod install
+* 在根目录下命令行 react-native link
+* 运行ios版本 在根目录下命令行 react-native run-ios
+* 运行android版本 在根目录下命令行 react-native run-android
+
 ## 参考资料
 * [iOS App图标和启动画面尺寸](http://www.jianshu.com/p/adpKye)
 * [react native中文网文档](http://reactnative.cn/docs/0.31/getting-started.html)
@@ -19,10 +35,11 @@ a react native app about fleet
 > 参考[链接](https://github.com/facebook/react-native/issues/4968)
 
 ### mqtt库报错'MQTTClient/MQTTClient.h' file not found 
-> 参考[链接](https://github.com/tuanpmt/react-native-mqtt/issues/6)
+> 参考[链接](https://github.com/tuanpmt/react-native-mqtt/issues/8)
 
 ### was built for newer is version () then being is linked () 的警告
 > 参考[链接](http://blog.csdn.net/liyiyismile/article/details/50434844)
+
 
 ## 使用的第三方库
 * [react-native-vector-icons(图标字体库)](https://github.com/oblador/react-native-vector-icons)
