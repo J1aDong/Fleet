@@ -44,7 +44,7 @@ class MqttPage extends Component {
             client.on('closed', function ()
             {
                 console.log('mqtt.event.closed');
-
+                toastShort('断开成功');
             });
 
             client.on('error', function (msg)
@@ -81,6 +81,11 @@ class MqttPage extends Component {
         mqttClient.publish(SUBSCRIBE_TOPIC, 'test', 0, false);
     }
 
+    _disconnectClient()
+    {
+        mqttClient.disconnect();
+    }
+
     render()
     {
         return (
@@ -110,6 +115,15 @@ class MqttPage extends Component {
                 }}>
                     <View style={styles.button}>
                         <Text style={{color: 'white'}}>发送</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() =>
+                {
+                    this._disconnectClient();
+                }}>
+                    <View style={styles.button}>
+                        <Text style={{color: 'white'}}>断开</Text>
                     </View>
                 </TouchableOpacity>
 
