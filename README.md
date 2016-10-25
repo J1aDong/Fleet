@@ -20,6 +20,9 @@ a react native app about fleet
 ### mqtt库报错'MQTTClient/MQTTClient.h' file not found 
 > 参考[链接](https://github.com/tuanpmt/react-native-mqtt/issues/6)
 
+### was built for newer is version () then being is linked () 的警告
+> 参考[链接](http://blog.csdn.net/liyiyismile/article/details/50434844)
+
 ## 使用的第三方库
 * [react-native-vector-icons(图标字体库)](https://github.com/oblador/react-native-vector-icons)
 * [百度地图](http://lbsyun.baidu.com/)

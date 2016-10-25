@@ -894,6 +894,7 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-w",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.j1adong.Fleet;
 				PRODUCT_NAME = Fleet;
@@ -924,6 +925,7 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-w",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.j1adong.Fleet;
 				PRODUCT_NAME = Fleet;
