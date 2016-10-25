@@ -83,18 +83,20 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "com.fleet"
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
     }
     splits {
         abi {
@@ -142,12 +144,18 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
+}
+
 dependencies {
+    compile project(':react-native-blur')
     compile project(':react-native-mqtt')
     compile project(':react-native-camera')
     compile project(':react-native-vector-icons')
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.fivehundredpx:blurringview:1.0.0'
     compile 'com.facebook.react:react-native:+'
     // From node_modules
     compile files('libs/baidumapapi_base_v4_1_0.jar')

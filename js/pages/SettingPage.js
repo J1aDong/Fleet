@@ -11,6 +11,7 @@ import {
     TextInput,
     BackAndroid
 } from 'react-native';
+import BlurImageView from '../component/BlurImageView';
 
 class SettingPage extends Component {
     render()
@@ -18,6 +19,7 @@ class SettingPage extends Component {
         return (
             <View style={styles.container}>
                 <Text>Setting</Text>
+                <BlurImageView/>
             </View>
         )
     }
