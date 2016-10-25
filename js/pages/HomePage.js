@@ -16,11 +16,10 @@ import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DrawerLayout from 'react-native-drawer-layout';
 
-import {statusHeight, getDeviceWidth} from '../common/CommonApi';
+import {statusHeight, getDeviceWidth, get} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
 import Setting from './SettingPage';
-import TableViewPage from './TableViewPage';
 import MqttPage from './MqttPage';
 import QRCodeScreen from '../component/QRCodeScreen';
 import {toastShort} from '../component/Toast';

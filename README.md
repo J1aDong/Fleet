@@ -6,6 +6,7 @@ a react native app about fleet
 * [react native中文网文档](http://reactnative.cn/docs/0.31/getting-started.html)
 * [百度地图文档](http://lbsyun.baidu.com/index.php?title=androidsdk/guide/buildproject)
 * [安卓Back键的处理·基本+高级篇](http://reactnative.cn/post/480)
+* [React/React Native 的ES5 ES6写法对照表](http://bbs.reactnative.cn/topic/15/react-react-native-%E7%9A%84es5-es6%E5%86%99%E6%B3%95%E5%AF%B9%E7%85%A7%E8%A1%A8)
 
 ## 碰到的问题&对策
 ###ipad实机没法启动hot reloading来动态进行调试
