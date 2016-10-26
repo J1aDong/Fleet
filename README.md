@@ -41,6 +41,8 @@ a react native app about fleet
 ### was built for newer is version () then being is linked () 的警告
 > 参考[链接](http://blog.csdn.net/liyiyismile/article/details/50434844)
 
+### Error:Execution failed for task ':app:transformClassesWithDexForDebug
+> 参考[链接](http://blog.sina.com.cn/s/blog_6f3828770102w30b.html)
 
 ## 使用的第三方库
 * [react-native-vector-icons(图标字体库)](https://github.com/oblador/react-native-vector-icons)
