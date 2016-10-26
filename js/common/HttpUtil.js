@@ -2,7 +2,7 @@
 
 var HTTPUtil = {};
 
-HTTPUtil.prototype.get = function (url, params, headers)
+HTTPUtil.get = function (url, params, headers)
 {
     if (params)
     {
@@ -45,7 +45,7 @@ HTTPUtil.prototype.get = function (url, params, headers)
     });
 };
 
-HTTPUtil.prototype.post = function (url, formData)
+HTTPUtil.post = function (url, json)
 {
     return new Promise(function (resolve, reject)
     {
@@ -55,10 +55,11 @@ HTTPUtil.prototype.post = function (url, formData)
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: formData,
+            body: JSON.stringify(json),
         })
             .then((response) =>
             {
+                console.log(response);
                 if (response.ok)
                 {
                     return response.json();
@@ -69,11 +70,12 @@ HTTPUtil.prototype.post = function (url, formData)
             })
             .then((response) =>
             {
+                console.log(JSON.stringify(response));
                 resolve(response);
             })
             .catch((err)=>
             {
-                reject({status: -1});
+                reject(err);
             })
     });
 };

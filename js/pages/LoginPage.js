@@ -13,8 +13,11 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {toastShort} from '../component/Toast';
+import {connect} from 'react-redux';
+import {login} from '../actions/login';
 
 class LoginPage extends Component {
+
     constructor(props)
     {
         super(props);
@@ -22,16 +25,31 @@ class LoginPage extends Component {
         this.state = {
             username: '',
             password: ''
-        }
+        };
+
+
     }
 
     _login()
     {
-        toastShort(this.state.username + "---" + this.state.password);
+        const {dispatch, navigator} = this.props;
+
+        dispatch(login(this.state.username, this.state.password, navigator));
     }
 
     render()
     {
+
+        const {login} = this.props;
+        if (login.loading)
+        {
+            console.log("page-->正在加载");
+        }
+        if (login.text)
+        {
+            console.log("page-->" + login.text);
+        }
+
         return (
             <View style={styles.container}>
                 <View style={styles.icon}>
@@ -77,7 +95,6 @@ class LoginPage extends Component {
                         <Text style={{color: 'white'}}>Log In</Text>
                     </View>
                 </TouchableOpacity>
-
             </View>
         )
     }
@@ -122,4 +139,13 @@ const styles = StyleSheet.create({
     }
 });
 
-export default LoginPage;
+//容器组件使用 connect() 方法连接 Redux
+function mapStateToProps(state)
+{
+    const {login} = state;
+    return {
+        login
+    }
+}
+
+export default connect(mapStateToProps)(LoginPage);

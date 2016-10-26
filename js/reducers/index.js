@@ -1,10 +1,10 @@
 'use strict';
 
 import {combineReducers} from 'redux';
-import rank from './rank';
+import login from './login';
 
 const rootReducer = combineReducers({
-    rank
-})
+    login
+});
 
 export default rootReducer;
