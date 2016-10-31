@@ -11,10 +11,18 @@
 #import <BaiduMapAPI_Location/BMKLocationService.h>
 #import "RCTComponent.h"
 
+@protocol LocationChangeDelegate <NSObject>
+@optional
+//代理方法
+- (void)LocationChange;
+@end
+
 @interface MyBdMapView : BMKMapView <BMKLocationServiceDelegate> {
     BMKLocationService *_locService;
 }
 
 @property(assign, nonatomic) BOOL location;
+@property(nonatomic, copy) RCTBubblingEventBlock onChange;
+@property (nonatomic, strong) id <LocationChangeDelegate> LocationDelegate;
 
 @end

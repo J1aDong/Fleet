@@ -46,6 +46,12 @@
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation {
     NSLog(@"didUpdateUserLocation lat %f,long %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+
+    _onChange(@{
+            @"latitude": @(userLocation.location.coordinate.latitude),
+            @"longitude": @(userLocation.location.coordinate.longitude),
+    });
+
     [self updateLocationData:userLocation];
 }
 
@@ -58,8 +64,6 @@
         [_locService stopUserLocationService];
         self.userTrackingMode = BMKUserTrackingModeNone;
     }
-
 }
-
 
 @end

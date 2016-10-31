@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -33,6 +32,7 @@
 		905645411DBDD8E7006F33C1 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 905645121DBDC034006F33C1 /* libicucore.tbd */; };
 		90E5CF621DB7530F007BCCDD /* FZYS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 90E5CF611DB7530F007BCCDD /* FZYS.ttf */; };
 		90E5CF851DB7774C007BCCDD /* RCTBdMapManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E5CF841DB7774C007BCCDD /* RCTBdMapManager.m */; };
+		90FF12091DC0F9C7003331E8 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 90FF12081DC0F9C7003331E8 /* main.jsbundle */; };
 		A0346CEA4CE247E997D84D1C /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2408B4AB15D244EB9699B15E /* libRCTCamera.a */; };
 		AB3FB82BF62D43A78F420AFE /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75C5B40DD9404E9C97BA5F08 /* Foundation.ttf */; };
 		BEDFA95DD0244EAF9B086B27 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 936BD9454588472BBAB41883 /* libRNBlur.a */; };
@@ -152,7 +152,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -189,6 +188,7 @@
 		905645181DBDCCD4006F33C1 /* RCTMqtt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTMqtt.xcodeproj; path = "../node_modules/.0.1.0-beta4@react-native-mqtt/ios/RCTMqtt/RCTMqtt.xcodeproj"; sourceTree = "<group>"; };
 		90E5CF611DB7530F007BCCDD /* FZYS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FZYS.ttf; sourceTree = "<group>"; };
 		90E5CF841DB7774C007BCCDD /* RCTBdMapManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTBdMapManager.m; sourceTree = "<group>"; };
+		90FF12081DC0F9C7003331E8 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		936BD9454588472BBAB41883 /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
 		989F7974E5A3406EA22F58A6 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		9E76F71A56668ABC04EC1862 /* Pods_Fleet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Fleet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,8 +321,8 @@
 		13B07FAE1A68108700A75B9A /* Fleet */ = {
 			isa = PBXGroup;
 			children = (
+				90FF12081DC0F9C7003331E8 /* main.jsbundle */,
 				90E5CF601DB752DB007BCCDD /* font */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -724,6 +724,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				FBCD3076211A4804BAD6B21F /* Entypo.ttf in Resources */,
+				90FF12091DC0F9C7003331E8 /* main.jsbundle in Resources */,
 				DB3F89EB068545AE9FF3EDCE /* EvilIcons.ttf in Resources */,
 				90E5CF621DB7530F007BCCDD /* FZYS.ttf in Resources */,
 				E6B996A5D72244E6A0248B4F /* FontAwesome.ttf in Resources */,

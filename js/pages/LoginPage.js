@@ -12,7 +12,6 @@ import {
     BackAndroid
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {toastShort} from '../component/Toast';
 import {connect} from 'react-redux';
 import {login} from '../actions/login';
 
@@ -26,8 +25,6 @@ class LoginPage extends Component {
             username: '',
             password: ''
         };
-
-
     }
 
     _login()

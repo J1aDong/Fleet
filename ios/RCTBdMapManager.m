@@ -18,6 +18,7 @@
 
 RCT_EXPORT_MODULE()
 RCT_EXPORT_VIEW_PROPERTY(location, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(onChange,RCTBubblingEventBlock)
 
 - (UIView *)view {
     MyBdMapView *mapView = [[MyBdMapView alloc] init];
