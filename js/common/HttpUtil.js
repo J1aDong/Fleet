@@ -2,30 +2,32 @@
 
 var HTTPUtil = {};
 
-HTTPUtil.get = function (url, params, headers)
+HTTPUtil.get = function (url, params)
 {
     if (params)
     {
-        if (params)
+        let paramsArray = [];
+        //encodeURIComponent
+        Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
+        if (url.search(/\?/) === -1)
         {
-            let paramsArray = [];
-            //encodeURIComponent
-            Object.keys(params).forEach(key => paramsArray.push(key + '=' + params[key]));
-            if (url.search(/\?/) === -1)
-            {
-                url += '?' + paramsArray.join('&')
-            } else
-            {
-                url += '&' + paramsArray.join('&')
-            }
+            url += '?' + paramsArray.join('&')
+        } else
+        {
+            url += '&' + paramsArray.join('&')
         }
     }
 
     return new Promise(function (resolve, reject)
     {
+        console.log('url-->' + url);
+        var Authorization = 'Bearer ' + global.token;
+        console.log(Authorization);
         fetch(url, {
             method: 'GET',
-            header: headers
+            headers: {
+                'Authorization': Authorization
+            }
         }).then((response) =>
         {
             if (response.ok)
@@ -37,6 +39,7 @@ HTTPUtil.get = function (url, params, headers)
             }
         }).then((response) =>
         {
+            console.log(JSON.stringify(response));
             resolve(response);
         }).catch((err) =>
         {

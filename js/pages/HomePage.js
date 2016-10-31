@@ -94,11 +94,19 @@ class HomePage extends Component {
                             });
                         }
                     }}/>
-                    <View style={styles.bottom}>
-                        <Text style={{fontSize: 20}}>纬度:{that.state.data.latitude}</Text>
-                        <Text style={{fontSize: 20}}>经度:{that.state.data.longitude}</Text>
+                    <View style={[styles.bottom, {alignItems: 'center'}]}>
+                        <View style={{marginTop: 30}}>
+                            <Text style={{
+                                fontSize: 20,
+                                fontFamily: 'FZQingKeBenYueSongS-R-GB'
+                            }}>纬度:{that.state.data.latitude}</Text>
+                            <Text style={{
+                                fontSize: 20,
+                                fontFamily: 'FZQingKeBenYueSongS-R-GB'
+                            }}>经度:{that.state.data.longitude}</Text>
+                        </View>
                     </View>
-                    {that._renderActionButton(navigator)}
+                    {/*{that._renderActionButton(navigator)}*/}
 
                 </View>
             </DrawerLayout>
