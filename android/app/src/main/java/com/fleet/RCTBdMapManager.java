@@ -54,29 +54,19 @@ public class RCTBdMapManager extends SimpleViewManager<MapView>
 	@ReactProp(name = "location", defaultBoolean = false)
 	public void setLocation(MapView view, boolean isLocation)
 	{
-		if( null == mCurrentMode )
-		{
-			mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
-		}
-		if( null == mBaiduMap )
-		{
-			mBaiduMap = view.getMap();
-		}
+		mCurrentMode = MyLocationConfiguration.LocationMode.NORMAL;
+		mBaiduMap = view.getMap();
+		// 开启定位图层
 		if( isLocation )
 		{
-			// 开启定位图层
 			mBaiduMap.setMyLocationEnabled(true);
 		}
 		else
 		{
 			mBaiduMap.setMyLocationEnabled(false);
 		}
-		// 定位初始化
-		if( null == mLocClient )
-		{
-			mLocClient = new LocationClient(view.getContext()
-					.getApplicationContext());
-		}
+		mLocClient = new LocationClient(view.getContext()
+				.getApplicationContext());
 		mLocClient.registerLocationListener(myListener);
 		LocationClientOption option = new LocationClientOption();
 		option.setOpenGps(true); // 打开gps
@@ -91,6 +81,7 @@ public class RCTBdMapManager extends SimpleViewManager<MapView>
 		{
 			mLocClient.stop();
 		}
+		isFirstLoc = true;
 	}
 
 	/**

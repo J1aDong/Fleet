@@ -2,9 +2,10 @@
 
 import {combineReducers} from 'redux';
 import login from './login';
+import mqtt from './mqtt';
 
 const rootReducer = combineReducers({
-    login
+    login, mqtt
 });
 
 export default rootReducer;

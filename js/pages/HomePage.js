@@ -18,13 +18,16 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import DrawerLayout from 'react-native-drawer-layout';
 import Immutable from 'immutable';
 
-import {statusHeight, getDeviceWidth, get} from '../common/CommonApi';
+import {statusHeight, getDeviceWidth} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
 import Setting from './LoginPage';
 import MqttPage from './MqttPage';
 import QRCodeScreen from '../component/QRCodeScreen';
 import {toastShort} from '../component/Toast';
+import MyStatusBar from '../component/MyStatusBar';
+import {connect} from 'react-redux';
+import {sendMqtt} from '../actions/mqtt';
 
 class HomePage extends Component {
     constructor(props)
@@ -35,6 +38,7 @@ class HomePage extends Component {
             data: Immutable.fromJS({
                 latitude: 0,
                 longitude: 0,
+                location: true
             })
         }
     }
@@ -44,6 +48,19 @@ class HomePage extends Component {
     {
         console.log(result);
         toastShort('扫描成功' + result);
+    }
+
+    _sendPayload()
+    {
+        const {dispatch} = this.props;
+
+        var payLoad = [
+            {
+                "lat": this.state.data.latitude,
+                "lon": this.state.data.longitude
+            }
+        ];
+        dispatch(sendMqtt(payLoad));
     }
 
     render()
@@ -62,7 +79,7 @@ class HomePage extends Component {
                 <View style={styles.container}>
                     <StatusBar
                         barStyle="default"/>
-                    <View style={styles.toolbarStatus}/>
+                    <MyStatusBar/>
                     <Toolbar style={styles.toolbar}
                              title="Fleet"
                              leftOnClick={() =>
@@ -95,7 +112,7 @@ class HomePage extends Component {
                         }
                     }}/>
                     <View style={[styles.bottom, {alignItems: 'center'}]}>
-                        <View style={{marginTop: 30}}>
+                        <View style={{marginTop: 30, flex: 2}}>
                             <Text style={{
                                 fontSize: 20,
                                 fontFamily: 'FZQingKeBenYueSongS-R-GB'
@@ -105,13 +122,18 @@ class HomePage extends Component {
                                 fontFamily: 'FZQingKeBenYueSongS-R-GB'
                             }}>经度:{that.state.data.longitude}</Text>
                         </View>
+                        <View style={{flex: 3}}>
+                            <TouchableOpacity onPress={() => that._sendPayload()}>
+                                <View style={styles.sendButton}>
+                                    <Text style={{color: 'white'}}>发送</Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     {/*{that._renderActionButton(navigator)}*/}
-
                 </View>
             </DrawerLayout>
         )
-
     }
 
     _renderActionButton(navigator)
@@ -179,6 +201,23 @@ const styles = StyleSheet.create({
         height: 22,
         color: 'white',
     },
+    sendButton: {
+        backgroundColor: 'red',
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+    }
 });
 
-export default HomePage;
+//容器组件使用 connect() 方法连接 Redux
+function mapStateToProps(state)
+{
+    const {mqtt} = state;
+    return {
+        mqtt
+    }
+}
+
+export default connect(mapStateToProps)(HomePage);
