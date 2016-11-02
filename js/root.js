@@ -20,7 +20,7 @@ class root extends Component {
         );
     }
 
-    componentDidMount()
+    componentWillMount()
     {
         var storage = new Storage({
             // 最大容量，默认值1000条数据循环存储
@@ -43,22 +43,10 @@ class root extends Component {
             // 或是写到另一个文件里，这里require引入
             // 或是在任何时候，直接对storage.sync进行赋值修改
             // sync: require('./sync')
-        })
+        });
 
         // 对于react native
         global.storage = storage;
-
-
-        global.storage.load({
-            key: 'userToken',
-        }).then(ret =>
-        {
-            var token = ret.userToken;
-
-            console.log('有token', token);
-
-            global.token = token;
-        })
     }
 }
 

@@ -15,6 +15,7 @@ import {
 import MyStatusBar from '../component/MyStatusBar';
 import {connect} from 'react-redux';
 import {connectMqtt} from '../actions/mqtt';
+import HomePage from '../pages/HomePage';
 
 class AgentList extends Component {
     constructor(props)
@@ -57,14 +58,26 @@ class AgentList extends Component {
     {
         console.log(JSON.stringify(rowData));
 
-        const {dispatch,navigator} = this.props;
+        const {dispatch, navigator} = this.props;
 
         var agentId = rowData.id;
         var agentToken = rowData.token;
 
         console.log('agentId-->' + agentId + ",agentToken-->" + agentToken);
 
-        dispatch(connectMqtt(agentId, agentToken,navigator));
+        connectMqtt(agentId, agentToken, navigator, dispatch).then(function (value)
+        {
+            console.log(value);
+
+            navigator.resetTo({
+                name: 'HomePage',
+                component: HomePage,
+                enableSwipeBack: false
+            });
+        }, function (value)
+        {
+            console.log(value)
+        });
     }
 
     _renderRow(rowData)

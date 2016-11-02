@@ -27,6 +27,49 @@ class LoginPage extends Component {
         };
     }
 
+    componentDidMount()
+    {
+        var that = this;
+
+        //读取userToken
+        global.storage.load({
+            key: 'userToken',
+        }).then(ret =>
+        {
+            var token = ret;
+            if (token && token !== '')
+            {
+                console.log('有token', token);
+
+                global.token = token;
+            } else
+            {
+                console.log('没有token');
+            }
+        }).catch(err =>
+        {
+            console.log('没有token');
+            console.log(err);
+        });
+
+        global.storage.load({
+            key: 'username',
+        }).then(ret =>
+        {
+            var username = ret;
+            if (username && username != '')
+            {
+                console.log('有username-->' + username);
+                that.setState({
+                    username: username
+                })
+            } else
+            {
+                console.log('没有username');
+            }
+        }).catch(err => console.log(err));
+    }
+
     _login()
     {
         const {dispatch, navigator} = this.props;

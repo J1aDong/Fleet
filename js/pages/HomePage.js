@@ -11,7 +11,8 @@ import {
     TextInput,
     ListView,
     StatusBar,
-    InteractionManager
+    InteractionManager,
+    BackAndroid
 } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -21,13 +22,16 @@ import Immutable from 'immutable';
 import {statusHeight, getDeviceWidth} from '../common/CommonApi';
 import Toolbar from '../component/ToolBar';
 import BdMapView from '../component/BdMapView';
-import Setting from './LoginPage';
+import LoginPage from './LoginPage';
 import MqttPage from './MqttPage';
 import QRCodeScreen from '../component/QRCodeScreen';
 import {toastShort} from '../component/Toast';
 import MyStatusBar from '../component/MyStatusBar';
 import {connect} from 'react-redux';
 import {sendMqtt} from '../actions/mqtt';
+import SettingPage from '../pages/SettingPage';
+import {fetchAgents} from '../actions/login';
+import NavigationViewPage from '../pages/NavigationViewPage';
 
 class HomePage extends Component {
     constructor(props)
@@ -38,7 +42,7 @@ class HomePage extends Component {
             data: Immutable.fromJS({
                 latitude: 0,
                 longitude: 0,
-                location: true
+                location: true,
             })
         }
     }
@@ -63,12 +67,94 @@ class HomePage extends Component {
         dispatch(sendMqtt(payLoad));
     }
 
+    componentDidMount()
+    {
+        //检测是否有token，没有就进登录页面
+
+        var that = this;
+        const {navigator} = this.props;
+        global.storage.load({
+            key: 'userToken',
+        }).then(ret =>
+        {
+            if (ret && ret !== '')
+            {
+                console.log('有token', ret);
+
+                global.token = ret;
+            } else
+            {
+                console.log('没有token');
+                that._gotoLoginPage(navigator)
+            }
+        }).catch(err =>
+        {
+            console.log('没有token');
+            that._gotoLoginPage(navigator);
+            console.log(err)
+        })
+    }
+
+    componentWillMount()
+    {
+        BackAndroid.addEventListener('hardwareBackPress', () => this.onBackAndroid());
+    }
+
+    componentWillUnMount()
+    {
+        BackAndroid.removeEventListener('hardwareBackPress', () => this.onBackAndroid());
+    }
+
+    onBackAndroid = () =>
+    {
+        if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now())
+        {
+            //最近2秒内按过back键，可以退出应用。
+            BackAndroid.exitApp();
+            return false;
+        }
+        this.lastBackPressed = Date.now();
+        toastShort('再按一次退出应用');
+        return true;
+    };
+
+    _gotoLoginPage(navigator)
+    {
+        navigator.replace({
+            name: 'LoginPage',
+            component: LoginPage,
+            enableSwipeBack: true
+        })
+    }
+
+    _gotoAgentList()
+    {
+        const {dispatch,navigator} = this.props;
+
+        //读取productId
+        global.storage.load({key: 'productId'}).then(ret =>
+        {
+            if (ret && ret !== '')
+            {
+                var productId = ret;
+                dispatch(fetchAgents(productId, navigator));
+            } else
+            {
+                console.log('没有productId')
+            }
+        }).catch(err =>
+        {
+            console.log('没有productId')
+            console.log(err)
+        })
+    }
+
     render()
     {
-        const {navigator} = this.props;
+        const {navigator, mqtt} = this.props;
         var that = this;
 
-        const menu = <MqttPage navigator={navigator}/>;
+        const menu = <NavigationViewPage navigator={navigator}/>;
 
         return (
             <DrawerLayout drawerWidth={getDeviceWidth() > 600 ? 500 : 300} renderNavigationView={() => menu}
@@ -91,8 +177,8 @@ class HomePage extends Component {
                     {
                         console.log('点击右边');
                         navigator.push({
-                            name: 'Setting',
-                            component: Setting,
+                            name: 'SettingPage',
+                            component: SettingPage,
                             enableSwipeBack: true
                         })
                     }}/>
@@ -122,6 +208,12 @@ class HomePage extends Component {
                                 fontFamily: 'FZQingKeBenYueSongS-R-GB'
                             }}>经度:{that.state.data.longitude}</Text>
                         </View>
+                        <TouchableOpacity onPress={() => that._gotoAgentList()}>
+                            <View style={{backgroundColor: 'gray', padding: 10, borderRadius: 20, marginBottom: 40}}>
+                                <Text style={{color: 'white'}}> 连接 Agent
+                                    : {mqtt.agentId && mqtt !== '' ? mqtt.agentId : '未连接'}</Text>
+                            </View>
+                        </TouchableOpacity>
                         <View style={{flex: 3}}>
                             <TouchableOpacity onPress={() => that._sendPayload()}>
                                 <View style={styles.sendButton}>
@@ -214,9 +306,9 @@ const styles = StyleSheet.create({
 //容器组件使用 connect() 方法连接 Redux
 function mapStateToProps(state)
 {
-    const {mqtt} = state;
+    const {mqtt, login} = state;
     return {
-        mqtt
+        mqtt, login
     }
 }
 

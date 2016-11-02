@@ -4,26 +4,19 @@ import * as types from '../actions/ActionTypes';
 
 const initialState = {
     isConnect: false,
+    agentId: ''
 };
 
-export default function login(state = initialState, action)
+export default function mqtt(state = initialState, action)
 {
+    console.log('reducer --> mqtt');
+
     switch (action.type)
     {
-        case types.FETCH_LOADING:
-            console.log('FETCH_LOADING');
+        case types.MQTT_CONNECTED:
+            console.log('MQTT_CONNECTED');
             return Object.assign({}, state, {
-                loading: true
-            });
-        case types.FETCH_LOGIN:
-            return Object.assign({}, state, {
-                loading: false,
-                text: action.token
-            });
-        case types.FETCH_FAIL:
-            return Object.assign({}, state, {
-                loading: false,
-                text: 'fail'
+                agentId: action.agentId
             });
         default:
             return state;

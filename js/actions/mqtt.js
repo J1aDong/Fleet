@@ -3,20 +3,20 @@
 import * as types from './ActionTypes';
 import mqtt from 'react-native-mqtt';
 import {toastShort} from '../component/Toast';
-import HomePage from '../pages/HomePage';
+import Constant from '../common/Constant';
 
 var mqttClient;
 var SUBSCRIBE_TOPIC;
 
-export function connectMqtt(agentId, agentToken, navigator)
+export function connectMqtt(agentId, agentToken, navigator, dispatch)
 {
-    SUBSCRIBE_TOPIC = "agents/" + agentId + "/downstream";
+    SUBSCRIBE_TOPIC = "jsonLocation2";
 
-    return dispatch =>
+    var promise = new Promise((resolve, reject) =>
     {
         var options = {
-            host: 'broker.j1st.io',
-            port: 1883,
+            host: Constant.MqttHost,
+            port: Constant.MqttPort,
             protocol: 'tcp',
             clientId: agentId,
             user: agentId,
@@ -33,19 +33,20 @@ export function connectMqtt(agentId, agentToken, navigator)
             {
                 console.log('mqtt.event.closed');
                 toastShort('断开成功');
-                dispatch(mqttDisconnected());
+                mqttDisconnected();
+                reject('断开成功');
             });
 
             client.on('error', function (msg)
             {
                 console.log('mqtt.event.error', msg);
-
+                reject('断开成功');
             });
 
             client.on('message', function (msg)
             {
                 console.log('mqtt.event.message', msg);
-                toastShort('接收到消息' + JSON.stringify(msg));
+                toastShort('发送成功');
             });
 
             client.on('connect', function ()
@@ -53,7 +54,8 @@ export function connectMqtt(agentId, agentToken, navigator)
                 console.log('连接成功');
                 client.subscribe(SUBSCRIBE_TOPIC, 0);
                 toastShort('连接成功');
-                dispatch(mqttConnected(navigator));
+                dispatch(mqttConnected(agentId, navigator));
+                resolve('连接成功');
             });
 
             client.connect();
@@ -61,21 +63,15 @@ export function connectMqtt(agentId, agentToken, navigator)
         {
             console.log(err);
         });
-    }
+    });
+    return promise;
 }
 
-function mqttConnected(navigator)
+function mqttConnected(agentId, navigator)
 {
-    toastShort("已连接");
-
-    navigator.push({
-        name: 'HomePage',
-        component: HomePage,
-        enableSwipeBack: false
-    });
-
     return {
-        type: types.MQTT_CONNECTED
+        type: types.MQTT_CONNECTED,
+        agentId: agentId
     }
 }
 
@@ -91,6 +87,11 @@ export function sendMqtt(payLoad)
 {
     return dispatch =>
     {
+        if (typeof (mqttClient) == "undefined")
+        {
+            toastShort("尚未连接，请先连接");
+            return;
+        }
         mqttClient.publish(SUBSCRIBE_TOPIC, JSON.stringify(payLoad), 0, false);
     }
 }

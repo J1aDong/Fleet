@@ -46,6 +46,12 @@ export function login(username, password, navigator)
             }
         }
 
+        //存储用户名
+        global.storage.save({
+            key: 'username',
+            rawData: username
+        });
+
         HttpUtil.post(url, json)
             .then((json) =>
             {
@@ -55,12 +61,10 @@ export function login(username, password, navigator)
                     var token = json.data.token;
                     global.storage.save({
                         key: 'userToken',
-                        rawData: {
-                            userToken: token
-                        }
+                        rawData: token
                     });
                     global.token = token;
-                    fetchProducts(navigator);
+                    dispatch(fetchProducts(navigator));
                 } else
                 {
                     dispatch(fetchFail());
@@ -73,50 +77,58 @@ export function login(username, password, navigator)
     }
 }
 
-function fetchProducts(navigator)
+export function fetchProducts(navigator)
 {
-    var url = Constant.PRODUCTS;
-    var params = {
-        limit: 15,
-        page: 1,
-        isAsc: true
-    };
-
-
-    HttpUtil.get(url, params).then((json) =>
+    return dispatch =>
     {
-        if (json.status)
-        {
-            console.log(json);
-            var productInfo = json.data.productInfo;
-            var product;
-            for (var i = 0; i < productInfo.length; i++)
-            {
-                var name = productInfo[i].name.toUpperCase().trim();
-                console.log("name-->" + name);
-                if (name == "J1ST DEMO")
-                {
-                    product = productInfo[i];
-                }
-            }
-            if (product)
-            {
-                toastShort('有J1ST Demo这个项目');
+        var url = Constant.PRODUCTS;
+        var params = {
+            limit: 15,
+            page: 1,
+            isAsc: true
+        };
 
-                fetchAgents(product.id, navigator);
+        HttpUtil.get(url, params).then((json) =>
+        {
+            if (json.status)
+            {
+                console.log(json);
+                var productInfo = json.data.productInfo;
+                var product;
+                for (var i = 0; i < productInfo.length; i++)
+                {
+                    var name = productInfo[i].name.toUpperCase().trim();
+                    console.log("name-->" + name);
+                    if (name == "J1ST DEMO")
+                    {
+                        product = productInfo[i];
+                    }
+                }
+                if (product)
+                {
+                    // toastShort('有J1ST Demo这个项目');
+
+                    //存储productId
+                    global.storage.save({
+                        key: 'productId',
+                        rawData: product.id
+                    });
+
+                    dispatch(fetchAgents(product.id, navigator));
+                } else
+                {
+                    toastLong("请确保当前账户下有J1ST Demo这个product，再重试");
+                }
             } else
             {
-                toastLong("请确保当前账户下有J1ST Demo这个product，再重试");
+                dispatch(fetchFail());
             }
-        } else
+        }).catch(err =>
         {
+            console.log(err);
             dispatch(fetchFail());
-        }
-    }).catch(err =>
-    {
-        console.log(err);
-        dispatch(fetchFail());
-    })
+        })
+    }
 }
 
 function fetchLoading()
@@ -127,36 +139,39 @@ function fetchLoading()
     }
 }
 
-function fetchAgents(productId, navigator)
+export function fetchAgents(productId, navigator)
 {
-    var url = Constant.AGENTS(productId);
-    console.log("url-->" + url);
-    var params = {
-        productId: productId,
-        limit: 30,
-        page: 1,
-        isAsc: true,
-        activated: false
-    };
-    HttpUtil.get(url, params)
-        .then((json) =>
-        {
-            if (json.status)
-            {
-                var agents = json.data.agentInfo;
-                navigator.push({
-                    name: 'AgentList',
-                    component: AgentList,
-                    passProps: {
-                        agents: agents
-                    },
-                    enableSwipeBack: true
-                })
-            }
-        }).catch(err =>
+    return dispatch =>
     {
-        console.log(err);
-    })
+        var url = Constant.AGENTS(productId);
+        console.log("url-->" + url);
+        var params = {
+            productId: productId,
+            limit: 30,
+            page: 1,
+            isAsc: true,
+            activated: false
+        };
+        HttpUtil.get(url, params)
+            .then((json) =>
+            {
+                if (json.status)
+                {
+                    var agents = json.data.agentInfo;
+                    navigator.push({
+                        name: 'AgentList',
+                        component: AgentList,
+                        passProps: {
+                            agents: agents
+                        },
+                        enableSwipeBack: true
+                    })
+                }
+            }).catch(err =>
+        {
+            console.log(err);
+        })
+    }
 }
 
 function fetchLogin(token, navigator)
@@ -172,6 +187,7 @@ function fetchLogin(token, navigator)
 function fetchFail()
 {
     toastShort('登录失败');
+    console.log('登录失败');
     return {
         type: types.FETCH_FAIL
     }
